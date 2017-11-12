@@ -32,7 +32,7 @@ public class DownLoadExcelUtil {
 
     public <T>  void getExcel(final List<T> list, OutputStream outputStream) throws IOException {
 
-        //第一步创建workbook
+        //创建workbook
         HSSFWorkbook wb = new HSSFWorkbook();
 
         //创建sheet
@@ -44,7 +44,7 @@ public class DownLoadExcelUtil {
         //插入数据
         createBodyRow(wb, sheet, list);
 
-        //第六步将生成excel文件保存到指定路径下
+        //输出Excle
         wb.write(outputStream);
     }
 
@@ -68,6 +68,10 @@ public class DownLoadExcelUtil {
         for(Cell c : cellList){
             if(flag){
                 flag = false;
+                /**
+                 * 新建一个sheet
+                 * 如果设置的sheetName为空则采用默认值sheet1
+                 */
                 sheet = wb.createSheet(c.sheetName());
                 row = sheet.createRow(0);
 
