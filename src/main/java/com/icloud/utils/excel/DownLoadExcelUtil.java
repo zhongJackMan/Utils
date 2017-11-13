@@ -36,7 +36,7 @@ public class DownLoadExcelUtil {
         HSSFWorkbook wb = new HSSFWorkbook();
 
         //创建sheet
-        HSSFSheet sheet = null;
+        HSSFSheet sheet = wb.createSheet("sheet");
 
         //创建表格头行
         creatHeadRow(wb, sheet, list);
@@ -72,7 +72,7 @@ public class DownLoadExcelUtil {
                  * 新建一个sheet
                  * 如果设置的sheetName为空则采用默认值sheet1
                  */
-                sheet = wb.createSheet(c.sheetName());
+                wb.setSheetName(0, c.sheetName());
                 row = sheet.createRow(0);
 
                 style.setAlignment(HSSFCellStyle.ALIGN_CENTER);  //居中
@@ -150,10 +150,11 @@ public class DownLoadExcelUtil {
 
         Field[] fields = obj.getClass().getDeclaredFields();
         Object[] objects = new Object[fields.length];
+        boolean access = true;
         for (Field field : fields)
         {
             try {
-                boolean access = field.isAccessible();
+                access = field.isAccessible();
                 if(!access) field.setAccessible(true);
                 Cell cell = field.getAnnotation(Cell.class);
                 if(cell != null) {
